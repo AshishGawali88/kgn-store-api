@@ -1,0 +1,62 @@
+# =====================================================================
+#  KGN Store API — configuration
+#
+#  Secrets and origins are read from ENVIRONMENT VARIABLES, never
+#  hard-coded. Locally it runs with safe defaults (in-memory H2,
+#  localhost-only CORS, admin endpoints locked).
+# =====================================================================
+
+server:
+  port: ${PORT:8080}
+  servlet:
+    context-path: /kgn-store-api   # Base path for all endpoints
+  error:
+    include-message: never        # do not leak internal messages to clients
+    include-stacktrace: never     # never expose stack traces
+    include-binding-errors: never
+
+spring:
+  application:
+    name: kgn-store-api
+
+  # ---- Database -----------------------------------------------------
+  # Default: Neon PostgreSQL (persistent storage).
+  # Override with SPRING_DATASOURCE_* env vars if needed.
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://ep-summer-dust-aqmheau7-pooler.c-8.us-east-1.aws.neon.tech/kgn-store-db?sslmode=require&channel_binding=require}
+    username: ${SPRING_DATASOURCE_USERNAME:neondb_owner}
+    password: ${SPRING_DATASOURCE_PASSWORD:npg_9JP8gSusDlZK}
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: false
+
+# ---- Application-specific settings ----------------------------------
+kgn:
+  # Comma-separated list of sites allowed to call this API.
+  # NEVER use "*" here in production. Set this to your real frontend URL,
+  # e.g. https://kgnpowertools.netlify.app
+  allowed-origins: ${ALLOWED_ORIGINS:http://localhost:4200,http://localhost:8080,http://127.0.0.1:5500,http://localhost:3000}
+
+  # Admin key for protected endpoints (/api/admin/**).
+  # If this is blank/unset, ALL admin endpoints are denied (fail-secure).
+  # Set a long random value in your host's environment variables.
+  admin-api-key: ${ADMIN_API_KEY:}
+
+  # Simple per-IP rate limit for write endpoints (enquiries/orders).
+  rate-limit:
+    requests-per-minute: ${RATE_LIMIT_PER_MIN:20}
+
+# Expose only a health endpoint, nothing sensitive.
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: never
