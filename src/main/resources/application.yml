@@ -23,9 +23,9 @@ spring:
   # Default: Neon PostgreSQL (persistent storage).
   # Override with SPRING_DATASOURCE_* env vars if needed.
   datasource:
-    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://ep-summer-dust-aqmheau7-pooler.c-8.us-east-1.aws.neon.tech/kgn-store-db?sslmode=require&channel_binding=require}
-    username: ${SPRING_DATASOURCE_USERNAME:neondb_owner}
-    password: ${SPRING_DATASOURCE_PASSWORD:npg_9JP8gSusDlZK}
+    url: ${SPRING_DATASOURCE_URL:jdbc:h2:mem:kgn;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE}
+    username: ${SPRING_DATASOURCE_USERNAME:sa}
+    password: ${SPRING_DATASOURCE_PASSWORD:}
 
   jpa:
     hibernate:
