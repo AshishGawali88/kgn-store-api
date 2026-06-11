@@ -18,7 +18,7 @@ public class WebConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         // Only the explicitly listed sites may call this API from a browser.
         // No wildcard origin, and credentials are not allowed by default.
-        registry.addMapping("/api/**")
+        registry.addMapping("/**")
                 .allowedOrigins(allowedOrigins)
                 .allowedMethods("GET", "POST", "OPTIONS")
                 .allowedHeaders("Content-Type", "X-Admin-Key")
