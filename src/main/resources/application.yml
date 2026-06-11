@@ -9,7 +9,7 @@
 server:
   port: ${PORT:8080}
   servlet:
-    context-path: /kgn-store-ui.vercel.app  # Base path for all endpoints
+    context-path: /kgn-store-api.onrender.com  # Base path for all endpoints
   error:
     include-message: never        # do not leak internal messages to clients
     include-stacktrace: never     # never expose stack traces
@@ -40,7 +40,7 @@ kgn:
   # Comma-separated list of sites allowed to call this API.
   # NEVER use "*" here in production. Set this to your real frontend URL,
   # e.g. https://kgnpowertools.netlify.app
-  allowed-origins: ${ALLOWED_ORIGINS:http://localhost:4200,http://localhost:8080,http://127.0.0.1:5500,http://localhost:3000}
+  allowed-origins: ${ALLOWED_ORIGINS:https://kgn-store-ui.vercel.app,http://localhost:4200,http://localhost:8080,http://127.0.0.1:5500,http://localhost:3000}
 
   # Admin key for protected endpoints (/api/admin/**).
   # If this is blank/unset, ALL admin endpoints are denied (fail-secure).
